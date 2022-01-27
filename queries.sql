@@ -57,4 +57,80 @@
 -- SELECT COUNT(title) FROM film
 -- WHERE title LIKE '%Truman%';
 
+-- MIN/MAX
+-- SELECT MAX(film_id) FROM film
+-- LIMIT 5;
 
+-- ROUND
+-- SELECT ROUND(AVG(replacement_cost), 4)
+-- FROM film;
+
+-- GROUP BY
+-- what 'customer_id' is spending the largest amount of money
+-- SELECT customer_id, SUM(amount)
+-- FROM payment
+-- GROUP BY customer_id
+-- ORDER BY SUM(amount) DESC;
+
+-- SELECT staff_id, customer_id, SUM(amount)
+-- FROM payment
+-- GROUP BY staff_id, customer_id
+-- ORDER BY staff_id, customer_id;
+
+-- select date from the datetime column and return the amount of money
+-- SELECT DATE(payment_date) as da, SUM(amount)
+-- FROM payment
+-- GROUP BY da
+
+-- we want to give a bonus to the staff member that handled the most payments
+-- SELECT staff_id, COUNT(payment_id)
+-- FROM payment
+-- GROUP BY staff_id;
+
+-- what is the average replacement cost per MPAA rating?
+-- SELECT rating, ROUND(AVG(replacement_cost), 1) as repl_cost
+-- FROM film
+-- GROUP BY rating
+-- ORDER BY repl_cost ASC; 
+
+-- what are the customers ids of the top 5 customers by total spend
+-- SELECT customer_id, SUM(amount) as amount
+-- FROM payment
+-- GROUP BY customer_id
+-- ORDER BY amount DESC
+-- LIMIT 5;
+
+-- HAVING
+-- what customer ids are eligible for platinum status (have 40 or more payments)
+-- SELECT customer_id, COUNT(payment_id)
+-- FROM payment
+-- GROUP BY customer_id
+-- HAVING COUNT(payment_id) >= 40;
+
+-- what are the customers ids of customers who have spent more than $100 with
+-- with our staff id 2?
+-- SELECT staff_id, customer_id, SUM(amount)
+-- FROM payment
+-- GROUP BY staff_id, customer_id
+-- HAVING staff_id = 2 AND SUM(amount) > 100
+-- ORDER BY SUM(amount) DESC;
+
+-- what are the customers ids of customers who have spent more than $110 with
+-- with our staff id 2?
+-- SELECT staff_id, customer_id, SUM(amount)
+-- FROM payment
+-- GROUP BY staff_id, customer_id
+-- HAVING staff_id = 2 AND SUM(amount) >= 110;
+
+-- how many films begin with the letter "J"?
+-- SELECT COUNT(title)
+-- FROM film
+-- WHERE title LIKE 'J%';
+
+-- what customer has the highest customer ID number whose name starts
+-- with an 'E' and has an address ID lower than 500?
+SELECT customer_id, first_name, address_id
+FROM customer
+WHERE first_name LIKE 'E%' AND address_id < 500
+ORDER BY customer_id DESC
+LIMIT 1;
