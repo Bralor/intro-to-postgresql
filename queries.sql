@@ -123,9 +123,9 @@
 -- HAVING staff_id = 2 AND SUM(amount) >= 110;
 
 -- how many films begin with the letter "J"?
--- SELECT COUNT(title)
--- FROM film
--- WHERE title LIKE 'J%';
+SELECT COUNT(title)
+FROM film
+WHERE title LIKE 'J%';
 
 -- what customer has the highest customer ID number whose name starts
 -- with an 'E' and has an address ID lower than 500?
