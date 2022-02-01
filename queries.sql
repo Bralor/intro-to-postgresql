@@ -123,14 +123,176 @@
 -- HAVING staff_id = 2 AND SUM(amount) >= 110;
 
 -- how many films begin with the letter "J"?
-SELECT COUNT(title)
-FROM film
-WHERE title LIKE 'J%';
+-- SELECT COUNT(title)
+-- FROM film
+-- WHERE title LIKE 'J%';
 
 -- what customer has the highest customer ID number whose name starts
 -- with an 'E' and has an address ID lower than 500?
-SELECT customer_id, first_name, address_id
-FROM customer
-WHERE first_name LIKE 'E%' AND address_id < 500
-ORDER BY customer_id DESC
-LIMIT 1;
+-- SELECT customer_id, first_name, address_id
+-- FROM customer
+-- WHERE first_name LIKE 'E%' AND address_id < 500
+-- ORDER BY customer_id DESC
+-- LIMIT 1;
+
+-- INNER JOIN .. ON
+-- SELECT payment_id, payment.customer_id, first_name
+-- FROM payment
+-- INNER JOIN customer
+-- ON payment.customer_id = customer.customer_id
+-- LIMIT 5;
+
+-- FULL OUTER JOIN .. ON
+-- SELECT first_name, customer.customer_id, payment_id
+-- FROM customer
+-- FULL OUTER JOIN payment
+-- ON customer.customer_id = payment.customer_id
+-- WHERE customer.customer_id IS null
+-- OR payment.payment_id IS null;
+
+-- LEFT OUTER JOIN .. ON
+-- SELECT film.film_id, film.title, inventory_id, store_id
+-- FROM film
+-- LEFT OUTER JOIN inventory
+-- ON inventory.film_id = film.film_id
+-- WHERE inventory.film_id IS null;
+
+-- RIGHT OUTER JOIN .. ON
+-- SELECT film.film_id, film.title, inventory_id, store_id
+-- FROM inventory
+-- RIGHT OUTER JOIN film
+-- ON inventory.film_id = film.film_id
+-- WHERE inventory.film_id IS null;
+
+-- what are the emails of the customers who live in California
+-- SELECT district, email
+-- FROM address
+-- INNER JOIN customer
+-- ON address.address_id = customer.address_id
+-- WHERE district = 'California';
+
+-- get a list of all the movies 'Nick Wahlberg' has been in
+-- SELECT title, first_name, last_name
+-- FROM actor
+-- INNER JOIN film_actor
+-- ON actor.actor_id = film_actor.actor_id
+-- INNER JOIN film
+-- ON film_actor.film_id = film.film_id
+-- WHERE first_name = 'Nick' AND last_name = 'Wahlberg';
+
+-- SHOW ALL
+-- SHOW TIMEZONE
+
+-- SELECT NOW
+-- SELECT NOW()
+
+-- timedate as string
+-- SELECT TIMEOFDAY()
+
+-- current time
+-- SELECT CURRENT_TIME
+
+-- current date
+-- SELECT CURRENT_DATE
+
+-- select quarter of the year
+-- SELECT
+-- 	EXTRACT(QUARTER FROM payment_date) AS my_year
+-- FROM payment
+-- LIMIT 5;
+
+-- time functions AGE, TO_CHAR
+-- SELECT
+-- 	AGE(payment_date)
+-- FROM payment
+-- LIMIT 5;
+
+-- select month/year with TO_CHAR function
+-- SELECT
+-- 	TO_CHAR(payment_date,'mm/dd/YYYY')
+-- FROM payment
+-- LIMIT 5;
+
+-- during which mounts did payments occur
+-- SELECT
+-- 	DISTINCT(TO_CHAR(payment_date, 'MONTH'))
+-- FROM payment;
+
+-- how many payments occurred on a Monday?
+-- SELECT
+-- 	COUNT(*)
+-- FROM payment
+-- WHERE EXTRACT(dow FROM payment_date) = 1;
+
+-- calculate the rental_r / repl_cost in percents
+-- SELECT
+-- 	ROUND(rental_rate / replacement_cost, 4) * 100 as percent_cost
+-- FROM film;
+
+-- concatenate two string values
+-- SELECT
+-- 	first_name || ' ' || last_name AS full_name
+-- FROM customer;
+
+-- create email address from lowercase fist letter of the name and surname
+-- SELECT
+-- 	LOWER(SUBSTRING(first_name FOR 1)) || '.' ||  LOWER(last_name) || '@comp.com'
+-- FROM customer
+-- LIMIT 5;
+
+-- Subqueries
+-- SELECT
+-- 	title,
+-- 	rental_rate
+-- FROM film
+-- WHERE rental_rate >
+-- (
+-- 	SELECT
+-- 		AVG(rental_rate)
+-- 	FROM film
+-- );
+
+-- return list of films they were returned 29-5-2005 to 30-5-2005
+-- SELECT film_id, title
+-- FROM film
+-- WHERE film_id IN
+-- (
+-- 	SELECT inventory.film_id
+-- 	FROM rental
+-- 	INNER JOIN inventory
+-- 	ON inventory.inventory_id = rental.inventory_id
+-- 	WHERE return_date BETWEEN '2005-05-29' AND '2005-05-30'
+-- )
+
+-- return the name and surname of customers that have payment greater than 11 $
+-- SELECT
+-- 	first_name,
+-- 	last_name
+-- FROM customer
+-- WHERE EXISTS
+-- (
+-- 	SELECT *
+-- 	FROM payment
+-- 	WHERE payment.customer_id = customer.customer_id
+-- 	AND amount > 11
+-- )
+
+-- SELF-JOIN
+-- find all the films that have the same length
+SELECT
+	f1.title,
+	f2.title,
+	f1.length
+FROM film AS f1
+INNER JOIN film AS f2
+ON f1.film_id != f2.film_id
+AND f1.length = f2.length;
+
+
+
+
+		 
+		 
+		 
+		 
+		 
