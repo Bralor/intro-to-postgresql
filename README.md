@@ -34,3 +34,37 @@ localhost:<port>
 ```
 je přihlaš jako uživatel pro Pgadmin4.
 
+<br>
+
+#### Spouštění přes interpret Pythonu
+
+---
+
+Sbírání dat z lokální databáze pomocí `psycopg2`:
+```python
+import psycopg2
+
+# klasický zápis
+conn = psycopg2.connect(
+    database="<jmeno_db>",
+    user="<jmeno_uzivatele>",
+)
+
+cur = conn.cursor()
+cur.execute("SELECT * FROM payment")
+result = cur.fetchone()
+
+print(result)
+
+conn.close()
+
+# context manager
+with psycopg2.connect(
+    database="<jmeno_db>", user="<jmeno_uzivatele>"
+) as conn:
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM <table>")
+    result = cur.fetchone()
+
+    print(result)
+```
