@@ -18,6 +18,22 @@ příkazy pro Postgresql.
 
 <br>
 
+#### Instalace
+
+---
+
+Pomocí příkazu `./build.sh` vytvořit konfiguráky:
+```
+./build.sh
+INFO:...
+```
+Potom doplnit údaje v souborech:
+- `config/jupyter.env`
+- `config/postgres.env`
+- `config/pgadmin.env`
+
+<br>
+
 #### Spouštění
 
 ---
